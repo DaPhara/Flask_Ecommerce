@@ -1,319 +1,164 @@
-{#<!DOCTYPE html>#}
-{#<html lang="en">#}
-{##}
-{#<head>#}
-{#    <meta charset="utf-8">#}
-{#    <meta name="viewport" content="width=device-width, initial-scale=1.0">#}
-{#    <title>SETEC PP</title>#}
-{#    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">#}
-{#        <link rel="shortcut icon" href="{{ url_for('static', filename='admin/assets/images/setec.png') }}">#}
-{##}
-{#    <style>#}
-{#        body {#}
-{#            font-family: 'Arial', sans-serif;#}
-{#            background-color: #f8f9fa;#}
-{#            height: 100vh;#}
-{#            margin: 0;#}
-{#            display: flex;#}
-{#            justify-content: center;#}
-{#            align-items: center;#}
-{#        }#}
-{##}
-{#        .login-container {#}
-{#            display: flex;#}
-{#            width: 900px;#}
-{#            background: #ffffff;#}
-{#            border-radius: 20px;#}
-{#            overflow: hidden;#}
-{#            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);#}
-{#        }#}
-{##}
-{#        .welcome-section {#}
-{#            flex: 1;#}
-{#            background: linear-gradient(135deg, #6c63ff, #ff6584);#}
-{#            color: #ffffff;#}
-{#            display: flex;#}
-{#            flex-direction: column;#}
-{#            justify-content: center;#}
-{#            align-items: center;#}
-{#            padding: 40px;#}
-{#        }#}
-{##}
-{#        .welcome-section h1 {#}
-{#            font-size: 32px;#}
-{#            font-weight: bold;#}
-{#        }#}
-{##}
-{#        .welcome-section p {#}
-{#            font-size: 18px;#}
-{#            margin-top: 10px;#}
-{#        }#}
-{##}
-{#        .form-section {#}
-{#            flex: 1;#}
-{#            padding: 40px;#}
-{#            display: flex;#}
-{#            flex-direction: column;#}
-{#            justify-content: center;#}
-{#        }#}
-{##}
-{#        .form-section h4 {#}
-{#            font-weight: bold;#}
-{#            margin-bottom: 10px;#}
-{#        }#}
-{##}
-{#        .form-section p {#}
-{#            margin-bottom: 30px;#}
-{#            color: #6c757d;#}
-{#        }#}
-{##}
-{#        .form-control {#}
-{#            border-radius: 10px;#}
-{#            margin-bottom: 20px;#}
-{#        }#}
-{##}
-{#        .btn-primary {#}
-{#            border-radius: 10px;#}
-{#            background: #6c63ff;#}
-{#            border: none;#}
-{#        }#}
-{##}
-{#        .btn-primary:hover {#}
-{#            background: #5142cc;#}
-{#        }#}
-{##}
-{#        .form-footer {#}
-{#            margin-top: 20px;#}
-{#            text-align: center;#}
-{#        }#}
-{##}
-{#        .form-footer a {#}
-{#            color: #6c63ff;#}
-{#            text-decoration: none;#}
-{#        }#}
-{##}
-{#        .form-footer a:hover {#}
-{#            text-decoration: underline;#}
-{#        }#}
-{#    </style>#}
-{#</head>#}
-{##}
-{#<body>#}
-{#    <div class="login-container">#}
-{#        <!-- Welcome Section -->#}
-{#        <div class="welcome-section">#}
-{#            <h1>Welcome Back!</h1>#}
-{#            <p>Please login to your account.</p>#}
-{#        </div>#}
-{##}
-{#        <!-- Form Section -->#}
-{#        <div class="form-section">#}
-{#            <h4>Login</h4>#}
-{##}
-{##}
-{#            <!-- Flash Messages -->#}
-{#            {% with messages = get_flashed_messages(with_categories=true) %}#}
-{#            {% if messages %}#}
-{#            {% for category, message in messages %}#}
-{#            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">#}
-{#                {{ message }}#}
-{#                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>#}
-{#            </div>#}
-{#            {% endfor %}#}
-{#            {% endif %}#}
-{#            {% endwith %}#}
-{##}
-{#            <form action="{{ url_for('admin_login') }}" method="POST" novalidate>#}
-{#                <!-- Email Input -->#}
-{#                <div class="mb-3">#}
-{#                    <label for="emailaddress" class="form-label">Email Address</label>#}
-{#                    <input type="email" id="emailaddress" name="email" class="form-control"#}
-{#                        placeholder="Enter your email" value="{{ request.args.get('email', '') }}">#}
-{#                </div>#}
-{##}
-{#                <!-- Password Input -->#}
-{#                <div class="mb-3">#}
-{#                    <label for="password" class="form-label">Password</label>#}
-{#                    <input type="password" id="password" name="password" class="form-control"#}
-{#                        placeholder="Enter your password">#}
-{#                </div>#}
-{##}
-{#                <!-- Remember Me and Forgot Password -->#}
-{#                <div class="d-flex justify-content-between align-items-center mb-3">#}
-{#                    <div class="form-check">#}
-{#                        <input type="checkbox" class="form-check-input" id="remember-me" name="remember" checked>#}
-{#                        <label for="remember-me" class="form-check-label">Remember Me</label>#}
-{#                    </div>#}
-{#                    <a href="#" class="text-decoration-none">Forgot Password?</a>#}
-{#                </div>#}
-{##}
-{#                <!-- Submit Button -->#}
-{#                <button type="submit" class="btn btn-primary w-100">Login</button>#}
-{#            </form>#}
-{##}
-{#            <!-- Footer Links -->#}
-{#            <div class="form-footer mt-3">#}
-{#                <span>New User? <a href="#">Sign Up</a></span>#}
-{#            </div>#}
-{#        </div>#}
-{#    </div>#}
-{##}
-{#    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>#}
-{#</body>#}
-{##}
-{#</html>#}
-
-
-{#Vong kmeng touch#}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
-    <title>Login | Adminto - Tailwind HTML Admin Dashboard Template</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="Adminto - Tailwind HTML Admin Dashboard Template, A fully featured admin theme which can be used to build CRM, CMS, etc."
-          name="description">
-    <meta content="coderthemes" name="author">
+    <title>SETEC PP</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='admin/assets/images/setec.png') }}">
 
-    {% include 'admin/layout/styles.html' %}
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
+        .login-container {
+            display: flex;
+            width: 900px;
+            background: #ffffff;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .welcome-section {
+            flex: 1;
+            background: linear-gradient(135deg, #6c63ff, #ff6584);
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+        }
+
+        .welcome-section h1 {
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .welcome-section p {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+
+        .form-section {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .form-section h4 {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .form-section p {
+            margin-bottom: 30px;
+            color: #6c757d;
+        }
+
+        .form-control {
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .btn-primary {
+            border-radius: 10px;
+            background: #6c63ff;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: #5142cc;
+        }
+
+        .form-footer {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .form-footer a {
+            color: #6c63ff;
+            text-decoration: none;
+        }
+
+        .form-footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 
 <body>
+    <div class="login-container">
+        <!-- Welcome Section -->
+        <div class="welcome-section">
+            <h1>Welcome Back!</h1>
+            <p>Please login to your account.</p>
+        </div>
 
-<!-- ============================================================== -->
-<!-- Start Page Content here -->
-<!-- ============================================================== -->
+        <!-- Form Section -->
+        <div class="form-section">
+            <h4>Login</h4>
 
-<div class="relative bg-cover bg-center bg-[url('../images/bg-auth3.png')]">
-    <div class="absolute inset-0 dark:bg-black/80"></div>
-    <div class="relative flex flex-col items-center justify-start py-20 h-screen">
 
-        <!-- Logo -->
-        <div class="pb-10">
-            <div class="flex justify-center">
-                <!-- Dark mode logo -->
-                <img src="{{ url_for('static', filename='admin/assets/images/logo-dark.png') }}" alt="logo"
-                     class="h-5 block dark:hidden">
-
-                <!-- Light mode logo -->
-                <img src="{{ url_for('static', filename='admin/assets/images/logo-light.png') }}" alt="logo"
-                     class="h-5 hidden dark:block">
+            <!-- Flash Messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-            <p class="text-gray-400 mt-3 dark:text-gray-300">Responsive Admin Dashboard</p>
-        </div> <!-- logo end -->
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
 
-
-        <div class="flex justify-center">
-            <div class="max-w-lg px-4 mx-auto">
-
-                <div class="card overflow-hidden">
-                    <div class="p-9">
-
-                        <div class="text-center mx-auto w-full">
-                            <h4 class="text-center text-lg uppercase font-bold mb-8">Sign In</h4>
-                        </div>
-                        <form action="{{ url_for('admin_login') }}" method="POST" class="sm:w-80" novalidate>
-                            <!-- Flash Messages Section -->
-                            {% with messages = get_flashed_messages(with_categories=true) %}
-                                {% if messages %}
-                                    {% for category, message in messages %}
-                                        {% if category == 'danger' %}
-                                            <div id="dismiss-example-danger"
-                                                 class="border bg-danger/10 text-danger border-danger/20 rounded-md py-3 px-5 flex justify-between items-center mb-6">
-                                                <p>
-                                                    <span class="font-bold">Danger</span> - {{ message }}
-                                                </p>
-                                                <button class="text-xl/[0]" data-fc-dismiss="dismiss-example-danger"
-                                                        type="button">
-                                                    <i class="mdi mdi-close text-xl text-gray-400"></i>
-                                                </button>
-                                            </div>
-                                        {% elif category == 'success' %}
-                                            <div id="dismiss-example-success"
-                                                 class="border bg-success/10 text-success border-success/20 rounded-md py-3 px-5 flex justify-between items-center mb-6">
-                                                <p>
-                                                    <span class="font-bold">Success</span> - {{ message }}
-                                                </p>
-                                                <button class="text-xl/[0]" data-fc-dismiss="dismiss-example-success"
-                                                        type="button">
-                                                    <i class="mdi mdi-close text-xl text-gray-400"></i>
-                                                </button>
-                                            </div>
-                                        {% endif %}
-                                    {% endfor %}
-                                {% endif %}
-                            {% endwith %}
-
-
-                            <!-- Email Input -->
-                            <div class="mb-6 space-y-2">
-                                <label for="emailaddress" class="font-medium text-gray-500">Email Address</label>
-                                <input
-                                        type="email"
-                                        id="emailaddress"
-                                        name="email"
-                                        class="form-input w-full placeholder:text-gray-400"
-                                        placeholder="Enter your email"
-                                        value="{{ request.args.get('email','') }}"
-                                >
-                            </div>
-
-                            <!-- Password Input -->
-                            <div class="mb-6 space-y-2">
-                                <label for="password" class="font-medium text-gray-500">Password</label>
-                                <input
-                                        type="password"
-                                        id="password"
-                                        name="password"
-                                        class="form-input w-full placeholder:text-gray-400"
-                                        placeholder="Enter your password"
-                                >
-                            </div>
-
-                            <!-- Remember Me Checkbox -->
-                            <div class="mb-6">
-                                <div class="flex items-center">
-                                    <input
-                                            type="checkbox"
-                                            class="form-checkbox rounded text-primary"
-                                            id="checkbox-signin"
-                                            name="remember"
-                                            checked
-                                    >
-                                    <label for="checkbox-signin" class="font-medium text-gray-500 ms-2">Remember
-                                        Me</label>
-                                </div>
-                            </div>
-
-                            <!-- Submit Button -->
-                            <div class="text-center mb-6">
-                                <button class="btn bg-primary w-full text-white hover:bg-primary-dark" type="submit">
-                                    Log In
-                                </button>
-                            </div>
-                        </form>
-
-                    </div>
-                </div> <!-- card end -->
-
-                <div class="text-center mt-8">
-                    <a href="#" class="text-gray-400 dark:text-gray-300 block mb-4"><i class="mdi mdi-lock me-1"></i>
-                        Forgot your password?</a>
+            <form action="{{ url_for('admin_login') }}" method="POST" novalidate>
+                <!-- Email Input -->
+                <div class="mb-3">
+                    <label for="emailaddress" class="form-label">Email Address</label>
+                    <input type="email" id="emailaddress" name="email" class="form-control"
+                        placeholder="Enter your email" value="{{ request.args.get('email', '') }}">
                 </div>
 
+                <!-- Password Input -->
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" id="password" name="password" class="form-control"
+                        placeholder="Enter your password">
+                </div>
+
+                <!-- Remember Me and Forgot Password -->
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="remember-me" name="remember" checked>
+                        <label for="remember-me" class="form-check-label">Remember Me</label>
+                    </div>
+                    <a href="#" class="text-decoration-none">Forgot Password?</a>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary w-100">Login</button>
+            </form>
+
+            <!-- Footer Links -->
+            <div class="form-footer mt-3">
+                <span>New User? <a href="#">Sign Up</a></span>
             </div>
-        </div> <!-- flex end -->
+        </div>
+    </div>
 
-    </div> <!-- flex end -->
-</div> <!-- bg end -->
-
-<!-- ============================================================== -->
-<!-- End Page content -->
-<!-- ============================================================== -->
-{% include 'admin/layout/scripts.html' %}
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
